@@ -9,9 +9,11 @@ import RouteTest from './components/RouteTest';
 /**
  * 1. Path Variable
  * /diary/1 -> 1번 일기
- * useParams hooks 사용해
- *
- *
+ * useParams() hooks
+ * 2. Query String
+ * - const [searchParams, setSerachParams] = useSearchParams();
+ * 3. Page Moving
+ * - useNavigate()
  */
 
 function App() {
