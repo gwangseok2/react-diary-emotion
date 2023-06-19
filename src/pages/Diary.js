@@ -8,7 +8,7 @@ const Diary = () => {
 
   return (
     <div>
-      <h1>여기는 {id}번째 일기야</h1>
+      <h1>여기는 {!id ? 0 : id}번째 일기야</h1>
     </div>
   );
 };

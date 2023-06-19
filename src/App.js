@@ -23,6 +23,28 @@ function App() {
         <header className="App-header">
           <div>리엑트 라우터 세팅</div>
         </header>
+        <figure>
+          <img
+            src={process.env.PUBLIC_URL + `/assets/emotion1.png`}
+            alt="이모션1"
+          />
+          <img
+            src={process.env.PUBLIC_URL + `/assets/emotion2.png`}
+            alt="이모션2"
+          />
+          <img
+            src={process.env.PUBLIC_URL + `/assets/emotion3.png`}
+            alt="이모션3"
+          />
+          <img
+            src={process.env.PUBLIC_URL + `/assets/emotion4.png`}
+            alt="이모션4"
+          />
+          <img
+            src={process.env.PUBLIC_URL + `/assets/emotion5.png`}
+            alt="이모션5"
+          />
+        </figure>
         <div className="App-header">
           <Routes>
             <Route path="/" element={<Home />} />
