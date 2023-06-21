@@ -37,3 +37,70 @@ a {
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
+/* MyButton */
+
+.MyButton {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 18px;
+  white-space: nowrap;
+  font-family: 'Nanum Pen Script', cursive;
+}
+
+.MyButton_defalut {
+  background-color: #ececec;
+  color: #000;
+}
+
+.MyButton_positive {
+  background-color: #64c964;
+  color: #fff;
+}
+
+.MyButton_negative {
+  background-color: #fd565f;
+  color: #fff;
+}
+
+/* MyButton */
+
+/* MyHeader */
+header {
+  padding: 20px 10px;
+  display: flex;
+  flex-grow: 1 2 1;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e2e2e2;
+}
+
+header > div {
+  display: flex;
+  justify-content: center;
+}
+
+header > .head-text {
+  flex-grow: 2;
+  font-size: 25px;
+}
+
+header > .head-btn-left,
+header > .head-btn-right {
+  flex-grow: 1;
+}
+
+header > .head-btn-left {
+  justify-content: flex-start;
+}
+
+header > .head-btn-right {
+  justify-content: flex-end;
+}
+
+header button {
+  font-family: 'Nanum Pen script', sans-serif;
+}

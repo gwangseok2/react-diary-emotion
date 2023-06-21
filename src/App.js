@@ -6,6 +6,10 @@ import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import RouteTest from './components/RouteTest';
 
+// components
+import MyButton from './components/MyButton';
+import MyHeader from './components/MyHeader';
+
 /**
  * 1. Path Variable
  * /diary/1 -> 1번 일기
@@ -23,6 +27,25 @@ function App() {
         <header className="App-header">
           <div>리엑트 라우터 세팅</div>
         </header>
+        <MyHeader
+          headText={'일기 수정하기'}
+          leftChild={
+            <MyButton
+              buttonText={'왼쪽 버튼'}
+              buttonEvent={() => {
+                alert('hi');
+              }}
+            />
+          }
+          rightChild={
+            <MyButton
+              buttonText={'오른쪽 버튼'}
+              buttonEvent={() => {
+                alert('hi');
+              }}
+            />
+          }
+        />
         <figure>
           <img
             src={process.env.PUBLIC_URL + `/assets/emotion1.png`}
@@ -57,6 +80,28 @@ function App() {
           </Routes>
           <RouteTest />
         </div>
+        <MyButton
+          buttonText={'작성하기'}
+          buttonEvent={() => {
+            alert('hi');
+          }}
+          buttonType={'positive'}
+        />
+
+        <MyButton
+          buttonText={'삭제하기'}
+          buttonEvent={() => {
+            alert('hi');
+          }}
+          buttonType={'negative'}
+        />
+
+        <MyButton
+          buttonText={'수정하기'}
+          buttonEvent={() => {
+            alert('hi');
+          }}
+        />
       </div>
     </BrowserRouter>
   );
