@@ -5,10 +5,7 @@ import New from './pages/New';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import RouteTest from './components/RouteTest';
-
-// components
-import MyButton from './components/MyButton';
-import MyHeader from './components/MyHeader';
+import React, { useReducer, useRef } from 'react';
 
 /**
  * 1. Path Variable
@@ -19,91 +16,96 @@ import MyHeader from './components/MyHeader';
  * 3. Page Moving
  * - useNavigate()
  */
+const reduce = (state, action) => {
+  let newState = [];
+  switch (action.type) {
+    case 'INIT': {
+      return action.data;
+    }
+    case 'CREATE': {
+      newState = [...action.data, ...state];
+      break;
+    }
+    case 'REMOVE': {
+      newState = state.filter((el) => el.id !== action.targetId);
+      console.log(newState, 'remove');
+      break;
+    }
+    case 'EDIT': {
+      newState = state.map((el) =>
+        el.id === action.data.id ? { ...action.data } : el
+      );
+      break;
+    }
+    default: {
+      return state;
+    }
+  }
+  return state;
+};
+
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 
 function App() {
+  const [data, dispatch] = useReducer(reduce, []);
+
+  const dataId = useRef(0);
+
+  // create
+  const onCreate = (date, contents, emotion) => {
+    dispatch({
+      type: 'CREATE',
+      data: {
+        id: dataId.current,
+        date: new Date(date).getTime(),
+        contents,
+        emotion,
+      },
+    });
+    dataId.current += 1;
+  };
+
+  // remove
+  const onRemove = (targetId) => {
+    dispatch({ type: 'REMOVE', targetId });
+  };
+
+  // EDIT
+  const onEdit = (targetId, date, contents, emotion) => {
+    dispatch({
+      type: 'EDIT',
+      data: {
+        id: targetId,
+        date: new Date(date),
+        contents,
+        emotion,
+      },
+    });
+    dataId.current += 1;
+  };
+
   return (
-    <BrowserRouter>
-      <div className="App">
-        <header className="App-header">
-          <div>리엑트 라우터 세팅</div>
-        </header>
-        <MyHeader
-          headText={'일기 수정하기'}
-          leftChild={
-            <MyButton
-              buttonText={'왼쪽 버튼'}
-              buttonEvent={() => {
-                alert('hi');
-              }}
-            />
-          }
-          rightChild={
-            <MyButton
-              buttonText={'오른쪽 버튼'}
-              buttonEvent={() => {
-                alert('hi');
-              }}
-            />
-          }
-        />
-        <figure>
-          <img
-            src={process.env.PUBLIC_URL + `/assets/emotion1.png`}
-            alt="이모션1"
-          />
-          <img
-            src={process.env.PUBLIC_URL + `/assets/emotion2.png`}
-            alt="이모션2"
-          />
-          <img
-            src={process.env.PUBLIC_URL + `/assets/emotion3.png`}
-            alt="이모션3"
-          />
-          <img
-            src={process.env.PUBLIC_URL + `/assets/emotion4.png`}
-            alt="이모션4"
-          />
-          <img
-            src={process.env.PUBLIC_URL + `/assets/emotion5.png`}
-            alt="이모션5"
-          />
-        </figure>
-        <div className="App-header">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/new" element={<New />} />
-            <Route path="/edit" element={<Edit />} />
-            {/* 무조건 id가 있어야 Diary 컴포넌트를 불러옴. */}
-            <Route path="/diary/:id" element={<Diary />} />
-            {/* 이런식으로 예외처리 가능 */}
-            <Route path="/diary" element={<Diary />} />
-          </Routes>
-          <RouteTest />
-        </div>
-        <MyButton
-          buttonText={'작성하기'}
-          buttonEvent={() => {
-            alert('hi');
-          }}
-          buttonType={'positive'}
-        />
-
-        <MyButton
-          buttonText={'삭제하기'}
-          buttonEvent={() => {
-            alert('hi');
-          }}
-          buttonType={'negative'}
-        />
-
-        <MyButton
-          buttonText={'수정하기'}
-          buttonEvent={() => {
-            alert('hi');
-          }}
-        />
-      </div>
-    </BrowserRouter>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={(onCreate, onEdit, onRemove)}>
+        <BrowserRouter>
+          <div className="App">
+            <div className="App-header">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/new" element={<New />} />
+                <Route path="/edit" element={<Edit />} />
+                {/* 무조건 id가 있어야 Diary 컴포넌트를 불러옴. */}
+                <Route path="/diary/:id" element={<Diary />} />
+                {/* 이런식으로 예외처리 가능 */}
+                <Route path="/diary" element={<Diary />} />
+              </Routes>
+              <RouteTest />
+            </div>
+          </div>
+        </BrowserRouter>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   );
 }
 
