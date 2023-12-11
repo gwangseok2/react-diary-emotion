@@ -52,7 +52,6 @@ const Home = () => {
         leftChild={<MyButton buttonText={'<'} buttonEvent={decreseMonth} />}
         rightChild={<MyButton buttonText={'>'} buttonEvent={increseMonth} />}
       />
-      <h1>여긴 Home</h1>
       <DiaryList diaryList={data} />
     </div>
   );

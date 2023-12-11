@@ -102,3 +102,67 @@ header > .head-btn-right {
 header button {
   font-family: 'Nanum Pen script', sans-serif;
 }
+
+/* DiaryList */
+
+.DiaryList .menu-wrapper {
+  margin: 30px 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.DiaryList .menu-wrapper .right-col {
+  flex-grow: 1;
+}
+
+.DiaryList .menu-wrapper .right-col button {
+  width: 100%;
+}
+
+.DiaryList .ControlMenu {
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ececec;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 18px;
+}
+
+/* DiaryItem */
+
+.DiaryItem {
+  padding: 15px 0;
+  border-bottom: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.DiaryItem .emotion-wrapper {
+  min-width: 120px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.DiaryItem .emotion-wrapper1 {
+  background-color: #64c964;
+}
+
+.DiaryItem .emotion-wrapper2 {
+  background-color: #9dd772;
+}
+
+.DiaryItem .emotion-wrapper3 {
+  background-color: #fdce17;
+}
+
+.DiaryItem .emotion-wrapper4 {
+  background-color: #fd8446;
+}
+
+.DiaryItem .emotion-wrapper5 {
+  background-color: #fd565f;
+}
