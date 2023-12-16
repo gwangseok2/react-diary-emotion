@@ -15,13 +15,11 @@ const filterOptionList = [
 
 const ControlMenu = ({ value, onChange, optionList }) => {
   return (
-    <select
-      className="ControlMenu"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
+    <select className="ControlMenu" value={value} onChange={(e) => onChange(e.target.value)}>
       {optionList.map((it, idx) => (
-        <option value={it.value}>{it.name}</option>
+        <option value={it.value} key={idx}>
+          {it.name}{' '}
+        </option>
       ))}
     </select>
   );
@@ -53,8 +51,7 @@ const DiaryList = ({ diaryList }) => {
 
     const copyList = JSON.parse(JSON.stringify(diaryList));
 
-    const filteredList =
-      filter === 'all' ? copyList : copyList.filter((el) => filterCallBack(el));
+    const filteredList = filter === 'all' ? copyList : copyList.filter((el) => filterCallBack(el));
     const sortedList = filteredList.sort(compare);
     return sortedList;
   };
@@ -63,39 +60,15 @@ const DiaryList = ({ diaryList }) => {
     <div className="DiaryList">
       <div className="menu-wrapper">
         <div className="left-col">
-          <ControlMenu
-            value={sortType}
-            onChange={setSortType}
-            optionList={sortOptionList}
-          />
-          <ControlMenu
-            value={filter}
-            onChange={setFilter}
-            optionList={filterOptionList}
-          />
+          <ControlMenu value={sortType} onChange={setSortType} optionList={sortOptionList} />
+          <ControlMenu value={filter} onChange={setFilter} optionList={filterOptionList} />
         </div>
         <div className="right-col">
-          <MyButton
-            buttonType={'positive'}
-            buttonText={'새 일기쓰기'}
-            buttonEvent={() => navigate('/new')}
-          />
+          <MyButton buttonType={'positive'} buttonText={'새 일기쓰기'} buttonEvent={() => navigate('/new')} />
         </div>
       </div>
 
       {getProcessedDiaryList().map((el) => (
-        // <div
-        //   key={el.id}
-        //   style={{
-        //     marginBottom: '10px',
-        //     paddingBottom: '5px',
-        //     borderBottom: '1px solid #ccc',
-        //   }}
-        // >
-        //   일기ID : {el.id} <br />
-        //   내용: {el.contents} <br />
-        //   감정: {el.emotion} <br />
-        // </div>
         <DiaryItem key={el.id} {...el} />
       ))}
     </div>

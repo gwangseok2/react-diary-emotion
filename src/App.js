@@ -32,12 +32,11 @@ const reduce = (state, action) => {
       break;
     }
     case 'EDIT': {
-      newState = state.map((el) =>
-        el.id === action.data.id ? { ...action.data } : el
-      );
+      newState = state.map((el) => (el.id === action.data.id ? { ...action.data } : el));
       break;
     }
     default: {
+      console.log('defauklt');
       return state;
     }
   }
@@ -87,7 +86,6 @@ const dummyDate = [
 
 function App() {
   const [data, dispatch] = useReducer(reduce, dummyDate);
-
   const dataId = useRef(0);
 
   // create

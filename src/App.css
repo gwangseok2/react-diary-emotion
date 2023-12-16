@@ -166,3 +166,19 @@ header button {
 .DiaryItem .emotion-wrapper5 {
   background-color: #fd565f;
 }
+
+.DiaryItem .info-wrapper {
+  flex-grow: 1;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.DiaryItem .info-wrapper .diary-date {
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.DiaryItem .info-wrapper .diary-contents {
+  font-size: 18px;
+}
