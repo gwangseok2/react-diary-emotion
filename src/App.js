@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import New from './pages/New';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
-import RouteTest from './components/RouteTest';
+// import RouteTest from './components/RouteTest';
 import React, { useReducer, useRef } from 'react';
 
 /**
@@ -23,12 +23,11 @@ const reduce = (state, action) => {
       return action.data;
     }
     case 'CREATE': {
-      newState = [...action.data, ...state];
+      newState = [action.data, ...state];
       break;
     }
     case 'REMOVE': {
       newState = state.filter((el) => el.id !== action.targetId);
-      console.log(newState, 'remove');
       break;
     }
     case 'EDIT': {
@@ -40,7 +39,7 @@ const reduce = (state, action) => {
       return state;
     }
   }
-  return state;
+  return newState;
 };
 
 export const DiaryStateContext = React.createContext();
@@ -70,23 +69,11 @@ const dummyDate = [
     contents: `오늘의 일기 4`,
     date: new Date().getTime() + 3,
   },
-  {
-    id: 5,
-    emotion: 3,
-    contents: `오늘의 일기 5`,
-    date: new Date().getTime() + 4,
-  },
-  {
-    id: 6,
-    emotion: 4,
-    contents: `오늘의 일기 6`,
-    date: new Date().getTime() + 400000000,
-  },
 ];
 
 function App() {
   const [data, dispatch] = useReducer(reduce, dummyDate);
-  const dataId = useRef(0);
+  const dataId = useRef(dummyDate.length + 1);
 
   // create
   const onCreate = (date, contents, emotion) => {
@@ -109,11 +96,12 @@ function App() {
 
   // EDIT
   const onEdit = (targetId, date, contents, emotion) => {
+    console.log(date, 'date=== onEdit', new Date(date));
     dispatch({
       type: 'EDIT',
       data: {
         id: targetId,
-        date: new Date(date),
+        date: new Date(date).getTime(),
         contents,
         emotion,
       },
@@ -123,21 +111,21 @@ function App() {
 
   return (
     <DiaryStateContext.Provider value={data}>
-      <DiaryDispatchContext.Provider value={(onCreate, onEdit, onRemove)}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onEdit, onRemove }}>
         <BrowserRouter>
           <div className="App">
-            <div className="App-header">
+            <div>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/new" element={<New />} />
-                <Route path="/edit" element={<Edit />} />
+                <Route path="/edit/:id" element={<Edit />} />
                 {/* 무조건 id가 있어야 Diary 컴포넌트를 불러옴. */}
                 <Route path="/diary/:id" element={<Diary />} />
                 {/* 이런식으로 예외처리 가능 */}
                 <Route path="/diary" element={<Diary />} />
               </Routes>
-              <RouteTest />
             </div>
+            {/* <RouteTest /> */}
           </div>
         </BrowserRouter>
       </DiaryDispatchContext.Provider>
