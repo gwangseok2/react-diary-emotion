@@ -68,6 +68,9 @@ const DiaryList = ({ diaryList }) => {
         </div>
       </div>
 
+      {getProcessedDiaryList().length === 0 && (
+        <h4 style={{ textAlign: 'center', marginTop: '50px' }}>작성된 일기가 없습니다.</h4>
+      )}
       {getProcessedDiaryList().map((el) => (
         <DiaryItem key={el.id} {...el} />
       ))}

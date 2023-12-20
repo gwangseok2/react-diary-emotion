@@ -15,7 +15,6 @@ body {
   font-size: calc(10px + 2vmin);
   color: #000;
 }
-
 a {
   color: inherit;
   text-decoration: none;
@@ -106,7 +105,10 @@ header button {
 }
 
 /* DiaryList */
-
+.DiaryList {
+  width: 100%;
+  min-height: 50vh;
+}
 .DiaryList .menu-wrapper {
   margin: 30px 0 20px;
   display: flex;

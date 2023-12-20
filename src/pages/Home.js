@@ -21,10 +21,6 @@ const Home = () => {
     }
   }, [diaryList, curDate]);
 
-  useEffect(() => {
-    console.log(data, 'useEffect');
-  }, [data]);
-
   const increseMonth = () => {
     setCurDate(new Date(curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate()));
   };
@@ -34,7 +30,7 @@ const Home = () => {
   };
 
   return (
-    <div style={{ width: '100%' }}>
+    <div>
       <MyHeader
         headText={headText}
         leftChild={<MyButton buttonText={'<'} buttonEvent={decreseMonth} />}

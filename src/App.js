@@ -42,6 +42,7 @@ const reduce = (state, action) => {
       return state;
     }
   }
+  localStorage.setItem('diaryList', JSON.stringify(newState));
   return newState;
 };
 
@@ -77,12 +78,6 @@ const dummyDate = [
 function App() {
   const [data, dispatch] = useReducer(reduce, []);
   const dataId = useRef(data.length);
-
-  useEffect(() => {
-    if (data.length > 0) {
-      localStorage.setItem('diaryList', JSON.stringify(data));
-    }
-  }, [data]);
 
   useEffect(() => {
     if (!localStorage.getItem('diaryList')) {
