@@ -5,7 +5,7 @@ import New from './pages/New';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 // import RouteTest from './components/RouteTest';
-import React, { useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 
 /**
  * 1. Path Variable
@@ -20,6 +20,7 @@ const reduce = (state, action) => {
   let newState = [];
   switch (action.type) {
     case 'INIT': {
+      console.log(action);
       return action.data;
     }
     case 'CREATE': {
@@ -27,7 +28,9 @@ const reduce = (state, action) => {
       break;
     }
     case 'REMOVE': {
+      localStorage.removeItem('diaryList');
       newState = state.filter((el) => el.id !== action.targetId);
+      localStorage.setItem('diaryList', JSON.stringify(newState));
       break;
     }
     case 'EDIT': {
@@ -72,9 +75,24 @@ const dummyDate = [
 ];
 
 function App() {
-  const [data, dispatch] = useReducer(reduce, dummyDate);
-  const dataId = useRef(dummyDate.length + 1);
+  const [data, dispatch] = useReducer(reduce, []);
+  const dataId = useRef(data.length);
 
+  useEffect(() => {
+    if (data.length > 0) {
+      localStorage.setItem('diaryList', JSON.stringify(data));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!localStorage.getItem('diaryList')) {
+      localStorage.setItem('diaryList', JSON.stringify(data));
+    } else {
+      console.log('localstorage');
+      const localDiaryList = JSON.parse(localStorage.getItem('diaryList'));
+      dispatch({ type: 'INIT', data: localDiaryList });
+    }
+  }, []);
   // create
   const onCreate = (date, contents, emotion) => {
     dispatch({
@@ -92,6 +110,8 @@ function App() {
   // remove
   const onRemove = (targetId) => {
     dispatch({ type: 'REMOVE', targetId });
+    localStorage.setItem('diaryList', JSON.stringify(data));
+    console.log(localStorage.getItem('diaryList'), 'onRemove');
   };
 
   // EDIT
@@ -108,6 +128,8 @@ function App() {
     });
     dataId.current += 1;
   };
+
+  const onInit = (data) => {};
 
   return (
     <DiaryStateContext.Provider value={data}>
