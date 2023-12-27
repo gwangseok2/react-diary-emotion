@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import MyButton from './MyButton';
 import MyHeader from './MyHeader';
@@ -17,9 +17,10 @@ const DiaryEditor = ({ editData, isEdit }) => {
   // Context에 공급되어 있는 애 받아옴
   const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
 
-  const handleClickEmote = (emotion) => {
+  // 함수를 캐싱하는 useCallback사용
+  const handleClickEmote = useCallback((emotion) => {
     setEmotion(emotion);
-  };
+  }, []);
 
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ const DiaryEditor = ({ editData, isEdit }) => {
     navigate('/', { replace: true });
   };
 
-  const handleClickRemove = (data) => {
+  const handleClickRemove = () => {
     if (window.confirm(`${editData.id}번째 일기를 삭제하시겠습니까?`)) {
       onRemove(editData.id);
       navigate('/', { replace: true });
