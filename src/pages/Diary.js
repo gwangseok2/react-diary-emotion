@@ -12,6 +12,12 @@ const Diary = () => {
   const { id } = useParams();
   const diaryList = useContext(DiaryStateContext);
   const [data, setDate] = useState();
+
+  useEffect(() => {
+    const htmlTitle = document.getElementsByTagName('title')[0];
+    htmlTitle.innerHTML = `스깅다이어리 상세${id}`;
+  }, []);
+
   useEffect(() => {
     if (diaryList.length >= 1) {
       const targetDiary = diaryList.find((el) => parseInt(el.id) === parseInt(id));
